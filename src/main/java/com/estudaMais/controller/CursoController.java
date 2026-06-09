@@ -27,32 +27,70 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<Curso>> buscarTodosCursos() {
-        List<Curso> cursos = cursoService.buscarTodosCursos();
-        return ResponseEntity.ok(cursos);
-    }
 
     @GetMapping("/ativos")
     public ResponseEntity<List<Curso>> buscarCursosAtivos() {
-        List<Curso> cursos = cursoService.buscarCursosAtivos();
-        return ResponseEntity.ok(cursos);
+        return ResponseEntity.ok(cursoService.buscarCursosAtivos());
     }
 
     @GetMapping("/destaques")
     public ResponseEntity<List<Curso>> buscarDestaques() {
-        List<Curso> destaques = cursoService.buscarDestaques();
-        return ResponseEntity.ok(destaques);
+        return ResponseEntity.ok(cursoService.buscarDestaques());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Curso> buscarCursoPorId(@PathVariable Long id) {
         Curso curso = cursoService.buscarCursoPorId(id);
-        if (curso != null) {
-            return ResponseEntity.ok(curso);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return curso != null ? ResponseEntity.ok(curso) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Curso>> buscarPorTitulo(@RequestParam String termo) {
+        return ResponseEntity.ok(cursoService.buscarPorTitulo(termo));
+    }
+
+    @PostMapping("/{id}/acesso")
+    public ResponseEntity<Void> registrarAcesso(@PathVariable Long id) {
+        cursoService.incrementarAcessos(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/professor/{professorId}")
+    public ResponseEntity<List<Curso>> listarCursosDoProfessor(@PathVariable Long professorId) {
+        return ResponseEntity.ok(cursoService.listarCursosDoProfessor(professorId));
+    }
+
+    @PostMapping("/professor")
+    public ResponseEntity<Curso> criarCursoDoProfessor(@RequestBody Curso curso,
+                                                       @RequestParam Long professorId) {
+        Curso cursoSalvo = cursoService.salvarCursoDoProfessor(curso, professorId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cursoSalvo);
+    }
+
+    @PutMapping("/professor/{id}")
+    public ResponseEntity<Curso> atualizarCursoDoProfessor(@PathVariable Long id,
+                                                           @RequestBody Curso curso,
+                                                           @RequestParam Long professorId) {
+        Curso cursoAtualizado = cursoService.atualizarCurso(id, curso);
+        return cursoAtualizado != null 
+                ? ResponseEntity.ok(cursoAtualizado) 
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/professor/{id}")
+    public ResponseEntity<Void> apagarCursoDoProfessor(@PathVariable Long id,
+                                                        @RequestParam Long professorId) {
+        Boolean apagado = cursoService.apagarCurso(id);
+        return apagado 
+                ? ResponseEntity.noContent().build() 
+                : ResponseEntity.notFound().build();
+    }
+
+
+    @GetMapping("/")
+    public ResponseEntity<List<Curso>> buscarTodosCursos() {
+        return ResponseEntity.ok(cursoService.buscarTodosCursos());
     }
 
     @PostMapping("/")
@@ -64,33 +102,16 @@ public class CursoController {
     @PutMapping("/{id}")
     public ResponseEntity<Curso> atualizarCurso(@PathVariable Long id, @RequestBody Curso curso) {
         Curso cursoAtualizado = cursoService.atualizarCurso(id, curso);
-        if (cursoAtualizado != null) {
-            return ResponseEntity.ok(cursoAtualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return cursoAtualizado != null 
+                ? ResponseEntity.ok(cursoAtualizado) 
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> apagarCurso(@PathVariable Long id) {
         Boolean apagado = cursoService.apagarCurso(id);
-        if (apagado) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return apagado 
+                ? ResponseEntity.noContent().build() 
+                : ResponseEntity.notFound().build();
     }
-
-    @PostMapping("/{id}/acesso")
-    public ResponseEntity<Void> registrarAcesso(@PathVariable Long id) {
-        cursoService.incrementarAcessos(id);
-        return ResponseEntity.ok().build();
-    }
-    
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Curso>> buscarPorTitulo(@RequestParam String termo) {
-        List<Curso> cursos = cursoService.buscarPorTitulo(termo);
-        return ResponseEntity.ok(cursos);
-    }
-    
 }

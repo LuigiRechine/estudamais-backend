@@ -73,4 +73,12 @@ public class CursoService {
         }
         return cursoRepository.findByTituloContainingIgnoreCaseAndAtivoTrue(termo);
     }
+    
+    public List<Curso> listarCursosDoProfessor(Long professorId) {
+        return cursoRepository.findByProfessorIdAndAtivoTrue(professorId);
+    }
+
+    public Curso salvarCursoDoProfessor(Curso curso, Long professorId) {
+        return cursoRepository.save(curso);
+    }
 }
