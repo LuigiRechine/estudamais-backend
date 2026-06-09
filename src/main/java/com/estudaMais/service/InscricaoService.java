@@ -71,4 +71,8 @@ public class InscricaoService {
         inscricao.setProgressoPercentual(percentual);
         inscricaoRepository.save(inscricao);
     }
+    
+    public int contarAlunosAtivosPorProfessor(Long professorId) {
+        return inscricaoRepository.contarAlunosAtivosPorProfessor(professorId);
+    }
 }

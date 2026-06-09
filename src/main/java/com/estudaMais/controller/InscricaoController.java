@@ -1,6 +1,7 @@
 package com.estudaMais.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,11 @@ public class InscricaoController {
                                           @RequestParam Long cursoId) {
         inscricaoService.cancelarMatricula(alunoId, cursoId);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/professor/{professorId}/alunos-ativos")
+    public ResponseEntity<Map<String, Integer>> contarAlunosAtivos(@PathVariable Long professorId) {
+        int total = inscricaoService.contarAlunosAtivosPorProfessor(professorId);
+        return ResponseEntity.ok(Map.of("totalAlunosAtivos", total));
     }
 }
