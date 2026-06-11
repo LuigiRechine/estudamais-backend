@@ -57,3 +57,10 @@ cd estudamais-backend
 
 2. Compile e execute o projeto
 ./mvnw spring-boot:run
+
+### Equipe
+
+#### Anna Julia Galhardo de Oliveira
+#### Luigi Barros Rechinelli
+#### Luisa Valim de Souza
+#### Maria Yumi Souto Matsuzaki
