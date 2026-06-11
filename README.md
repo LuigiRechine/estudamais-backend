@@ -57,12 +57,3 @@ cd estudamais-backend
 
 2. Compile e execute o projeto
 ./mvnw spring-boot:run
-
-### Estrutura de Pastas Principais
-Bashsrc/main/java/com/estudaMais/
-├── EstudaMaisApplication.java
-├── config/
-├── controller/       # Controladores REST
-├── entity/           # Entidades JPA
-├── repository/       # Repositórios
-└── service/          # Regras de negócio
