@@ -43,10 +43,10 @@ Este repositório contém a **API REST** desenvolvida com Spring Boot, responsá
 
 2. Configure as credenciais no arquivo src/main/resources/application.properties:
 
+    ```java
     spring.datasource.url=jdbc:mysql://localhost:3306/estudamais?createDatabaseIfNotExist=true&serverTimezone=America/Sao_Paulo
     spring.datasource.username=seu_usuario
     spring.datasource.password=sua_senha
-
     spring.jpa.hibernate.ddl-auto=update
     spring.jpa.show-sql=true
 
