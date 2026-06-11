@@ -51,11 +51,11 @@ Este repositório contém a **API REST** desenvolvida com Spring Boot, responsá
     spring.jpa.show-sql=true
 
 ### Passos para Rodar
-# 1. Clone o repositório
+1. Clone o repositório
 git clone https://github.com/LuigiRechine/estudamais-backend.git
 cd estudamais-backend
 
-# 2. Compile e execute o projeto
+2. Compile e execute o projeto
 ./mvnw spring-boot:run
 
 ### Estrutura de Pastas Principais
